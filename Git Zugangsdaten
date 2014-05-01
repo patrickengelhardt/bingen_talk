@@ -1,0 +1,2 @@
+git remote add origin https://github.com/patrickengelhardt/bingen_talk.git
+git push -u origin master
