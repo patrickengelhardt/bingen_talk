@@ -9,4 +9,19 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-BingenTalk::Application.config.secret_key_base = '48021a8a1ddac6f92f6a25fc2f3431e879cc019bff74fcc83618ba93e9b4b614440ec794671ec7014d6ad63924a5bc9f10693bded7fe917b8150009c9583e276'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+BingenTalk::Application.config.secret_key_base = secure_token
